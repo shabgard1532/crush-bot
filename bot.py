@@ -1,57 +1,65 @@
 import logging
-from flask import Flask, request
 from aiogram import Bot, Dispatcher, types
-from aiogram.utils.executor import start_webhook
-import os
-# توکن ربات رو اینجا بذار
+from aiogram.utils import executor
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.exceptions import TelegramAPIError
+
+# تنظیمات لاگ‌گیری برای خطایابی
+logging.basicConfig(level=logging.INFO)
+
+# توکن ربات تلگرام
 API_TOKEN = "7746983847:AAHj7bO_3io6OyiZ-PsYMl0QxGStg-_3R6k"
-WEBHOOK_URL = "https://crush-bot.onrender.com/webhook"
-# تنظیمات وبهوک
-WEBHOOK_HOST = "https://crush-bot.onrender.com"  # اینجا آدرس دامنه یا هاستت رو بذار
-WEBHOOK_PATH = "/webhook"
-WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
-# تنظیمات وب‌سرور
-WEBAPP_HOST = "0.0.0.0"
-WEBAPP_PORT = int(os.environ.get("PORT", 5000))  # پورت را از متغیر محیطی بگیر
+# شناسه کانال (با @ بنویس)
+CHANNEL_ID = "@crushyab_bam"
 
-# راه‌اندازی ربات
+# مقداردهی ربات و دیسپچر
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
-# تنظیم لاگ‌ها
-logging.basicConfig(level=logging.INFO)
+# تابع بررسی عضویت کاربر در کانال
+async def check_membership(user_id):
+    try:
+        member = await bot.get_chat_member(CHANNEL_ID, user_id)
+        return member.status in ["member", "administrator", "creator"]
+    except TelegramAPIError:
+        return False
 
-# ساخت سرور Flask
-app = Flask(__name__)
-
-@app.route(WEBHOOK_PATH, methods=["POST"])
-async def webhook_handler():
-    update = types.Update(**request.json)
-    await dp.process_update(update)
-    return "OK", 200
-
+# هندلر /start
 @dp.message_handler(commands=['start'])
 async def start_command(message: types.Message):
-    await message.reply ("سلام! ربات وبهوک فعال شد")
+    user_id = message.from_user.id
 
-async def on_startup(dp):
-    await bot.set_webhook(WEBHOOK_URL)
+    # پیام خوش‌آمدگویی
+    welcome_text = ":wave: به ربات کراش‌یاب بم خوش آمدید!\n\n" \
+                   ":small_blue_diamond: این ربات به شما کمک می‌کند تا کراش خود را پیدا کنید. اما قبل از شروع، ابتدا باید عضو کانال ما شوید. :white_check_mark:"
+    await message.answer(welcome_text)
 
-async def on_shutdown(dp):
-    await bot.delete_webhook()
+    # بررسی عضویت کاربر
+    is_member = await check_membership(user_id)
     
-async def echo_message(message: types.Message):
-    await message.reply(f"پیام شما: {message.text}")
+    if is_member:
+        await message.answer(":white_check_mark: شما عضو کانال هستید، حالا می‌توانید از ربات استفاده کنید!")
+    else:
+        keyboard = InlineKeyboardMarkup()
+        keyboard.add(InlineKeyboardButton(":loudspeaker: عضویت در کانال", url=f"https://t.me/{CHANNEL_ID[1:]}"))
+        keyboard.add(InlineKeyboardButton(":white_check_mark: عضو شدم", callback_data="check_membership"))
+
+        await message.answer(":warning: برای استفاده از ربات، ابتدا باید عضو کانال ما شوید.", reply_markup=keyboard)
+
+# بررسی دکمه "عضو شدم"
+@dp.callback_query_handler(lambda c: c.data == "check_membership")
+async def verify_membership(callback_query: types.CallbackQuery):
+    user_id = callback_query.from_user.id
+    is_member = await check_membership(user_id)
     
+    if is_member:
+        await bot.answer_callback_query(callback_query.id, ":white_check_mark: عضویت تأیید شد!")
+        await bot.send_message(user_id, ":white_check_mark: حالا می‌توانید از ربات استفاده کنید!")
+    else:
+        await bot.answer_callback_query(callback_query.id, ":x: هنوز عضو کانال نشده‌اید!")
+
+# اجرای ربات
 if __name__ == "__main__":
-    from aiogram import executor
-    start_webhook(
-        dispatcher=dp,
-        webhook_path=WEBHOOK_PATH,
-        on_startup=on_startup,
-        on_shutdown=on_shutdown,
-        host=WEBAPP_HOST,
-        port=WEBAPP_PORT,
-    )
+    executor.start_polling(dp, skip_updates=True)
 
