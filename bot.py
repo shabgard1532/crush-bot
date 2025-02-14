@@ -2,7 +2,7 @@ import logging
 from aiogram import Bot, Dispatcher, types
 from aiogram.utils import executor
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from aiogram.exceptions import TelegramAPIError
+from aiogram.utils.exceptions import TelegramAPIError
 
 # تنظیمات لاگ‌گیری برای خطایابی
 logging.basicConfig(level=logging.INFO)
