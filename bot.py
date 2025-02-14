@@ -21,12 +21,21 @@ app = Flask(__name__)
 def home():
     return "Bot is running!"
 
-async def main():
-    """ اجرای همزمان Flask و aiogram """
-    loop = asyncio.get_event_loop()
-    loop.create_task(start_polling(dp, skip_updates=True))
+async def start_bot():
+    """ اجرای Aiogram """
+    await dp.start_polling()
 
-if __name__ == "__main__":
+def run():
+    """ اجرای همزمان Flask و Aiogram """
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
+    # اجرای ربات در یک ترد جداگانه
+    loop.create_task(start_bot())
+
+    # اجرای Flask
     port = int(os.environ.get("PORT", 10000))
-    asyncio.run(main())  # اجرای ربات
-    app.run(host="0.0.0.0", port=port)  # اجرای Flask
+    app.run(host="0.0.0.0", port=port)
+
+if __name__== "__main__":
+    run()
