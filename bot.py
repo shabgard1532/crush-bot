@@ -1,4 +1,4 @@
-om aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher, types
 from aiogram.utils import executor
 
 توکن ربات رو اینجا بزار
