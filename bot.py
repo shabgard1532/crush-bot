@@ -63,7 +63,7 @@ async def verify_membership(callback_query: types.CallbackQuery):
         await bot.answer_callback_query(callback_query.id, ":x: هنوز عضو کانال نشده‌اید! :name_badge:")
 
 # :small_blue_diamond: اجرای ربات
-if name == "main":
+if __name__ == "__main__":
     executor.start_polling(dp, skip_updates=True)
 
 
