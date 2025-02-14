@@ -29,9 +29,7 @@ async def check_membership(user_id):
 @dp.message_handler(commands=['start'])
 async def start_command(message: types.Message):
     user_id = message.from_user.id
-
-    # پیام خوش‌آمدگویی
-  welcome_text = (":wave: به ربات کراش‌یاب بم خوش آمدید!\n\n
+welcome_text = (":wave: به ربات کراش‌یاب بم خوش آمدید!\n\n
   :small_blue_diamond: این ربات به شما کمک می‌کند تا کراش خود را پیدا کنید. اما قبل از شروع، ابتدا باید عضو کانال ما شوید. :white_check_mark:"
 member_text = ":white_check_mark: شما عضو کانال هستید، حالا می‌توانید از ربات استفاده کنید!")
    
