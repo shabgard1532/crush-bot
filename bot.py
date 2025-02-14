@@ -13,7 +13,7 @@ WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
 # تنظیمات وب‌سرور
 WEBAPP_HOST = "0.0.0.0"
-WEBAPP_PORT = 10000
+WEBAPP_PORT = int(os.environ.get("PORT", 5000))  # پورت را از متغیر محیطی بگیر
 
 # راه‌اندازی ربات
 bot = Bot(token=API_TOKEN)
