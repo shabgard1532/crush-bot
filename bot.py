@@ -31,8 +31,8 @@ async def start_command(message: types.Message):
     user_id = message.from_user.id
 
     # پیام خوش‌آمدگویی
-    welcome_text = ":wave: به ربات کراش‌یاب بم خوش آمدید!\n\n" \
-                   ":small_blue_diamond: این ربات به شما کمک می‌کند تا کراش خود را پیدا کنید. اما قبل از شروع، ابتدا باید عضو کانال ما شوید. :white_check_mark:"
+  welcome_text = "\U0001F44B به ربات کراش‌یاب بم خوش آمدید!\n\n\U0001F539 این ربات به شما کمک می‌کند تا کراش خود را پیدا کنید. اما قبل از شروع، ابتدا باید عضو کانال ما شوید. \U00002705"
+member_text = "\U00002705 شما عضو کانال هستید، حالا می‌توانید از ربات استفاده کنید!"
     await message.answer(welcome_text)
 
     # بررسی عضویت کاربر
