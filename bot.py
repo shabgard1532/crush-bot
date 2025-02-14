@@ -15,7 +15,7 @@ async def start_command(message: types.Message):
     await message.reply("سلام! ربات کراش‌یاب آماده است. :blush:")
 
 # سرور Flask برای Render
-app = Flask(name)
+app = Flask(__name__)
 
 @app.route('/')
 def home():
@@ -26,7 +26,7 @@ async def main():
     loop = asyncio.get_event_loop()
     loop.create_task(start_polling(dp, skip_updates=True))
 
-if name == "main":
+if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     asyncio.run(main())  # اجرای ربات
     app.run(host="0.0.0.0", port=port)  # اجرای Flask
