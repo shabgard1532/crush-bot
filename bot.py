@@ -5,7 +5,7 @@ from aiogram.utils.executor import start_webhook
 
 # توکن ربات رو اینجا بذار
 API_TOKEN = "7746983847:AAHj7bO_3io6OyiZ-PsYMl0QxGStg-_3R6k"
-
+WEBHOOK_URL = "https://crush-bot.onrender.com/webhook"
 # تنظیمات وبهوک
 WEBHOOK_HOST = "https://crush-bot.onrender.com"  # اینجا آدرس دامنه یا هاستت رو بذار
 WEBHOOK_PATH = "/webhook"
