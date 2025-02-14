@@ -12,7 +12,7 @@ dp = Dispatcher(bot)
 # هندلر برای دستور /start
 @dp.message_handler(commands=['start'])
 async def start_command(message: types.Message):
-    await message.reply("سلام! ربات کراش‌یاب آماده است. :blush:")
+    await message.reply("سلام! ربات کراش‌یاب آماده است")
 
 # اجرای ربات
 if __name__ == "__main__":
