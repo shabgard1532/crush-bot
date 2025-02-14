@@ -33,7 +33,7 @@ async def webhook_handler():
 
 @dp.message_handler(commands=['start'])
 async def start_command(message: types.Message):
-    await message.reply :tada:("سلام! ربات وبهوک فعال شد")
+    await message.reply :tada("سلام! ربات وبهوک فعال شد")
 
 async def on_startup(dp):
     await bot.set_webhook(WEBHOOK_URL)
