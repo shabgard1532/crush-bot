@@ -40,7 +40,10 @@ async def on_startup(dp):
 
 async def on_shutdown(dp):
     await bot.delete_webhook()
-
+    
+async def echo_message(message: types.Message):
+    await message.reply(f"پیام شما: {message.text}")
+    
 if __name__ == "__main__":
     from aiogram import executor
     start_webhook(
