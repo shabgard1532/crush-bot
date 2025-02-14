@@ -13,7 +13,7 @@ WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
 # تنظیمات وب‌سرور
 WEBAPP_HOST = "0.0.0.0"
-WEBAPP_PORT = 8080
+WEBAPP_PORT = 10000
 
 # راه‌اندازی ربات
 bot = Bot(token=API_TOKEN)
