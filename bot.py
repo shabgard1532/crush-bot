@@ -2,7 +2,7 @@ import logging
 from flask import Flask, request
 from aiogram import Bot, Dispatcher, types
 from aiogram.utils.executor import start_webhook
-
+import os
 # توکن ربات رو اینجا بذار
 API_TOKEN = "7746983847:AAHj7bO_3io6OyiZ-PsYMl0QxGStg-_3R6k"
 WEBHOOK_URL = "https://crush-bot.onrender.com/webhook"
