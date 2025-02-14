@@ -1,12 +1,19 @@
 from aiogram import Bot, Dispatcher, types
 from aiogram.utils import executor
+import asyncio
 
-توکن ربات رو اینجا بزار
-
+# توکن ربات را اینجا بگذارید
 API_TOKEN = "7746983847:AAHj7bO_3io6OyiZ-PsYMl0QxGStg-_3R6k"
 
-bot = Bot(token=API_TOKEN) dp = Dispatcher(bot)
+# ایجاد نمونه‌های ربات و دیسپچر
+bot = Bot(token=API_TOKEN)
+dp = Dispatcher(bot)
 
-@dp.message_handler(commands=['start']) async def start_command(message: types.Message): await message.reply("سلام! ربات کراش‌یاب آماده است")
+# هندلر برای دستور /start
+@dp.message_handler(commands=['start'])
+async def start_command(message: types.Message):
+    await message.reply("سلام! ربات کراش‌یاب آماده است. :blush:")
 
-if __name__ == '__main__': executor.start_polling(dp, skip_updates=True)
+# اجرای ربات
+if __name__ == "__main__":
+    executor.start_polling(dp, skip_updates=True)
