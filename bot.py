@@ -14,7 +14,7 @@ async def start_command(message: types.Message):
     await message.reply("سلام! ربات کراش‌یاب آماده است. :blush:")
 
 # سرور Flask برای Render
-app = Flask(name)
+app = Flask(__name__)
 
 @app.route('/')
 def home():
